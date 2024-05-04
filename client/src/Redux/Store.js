@@ -2,7 +2,7 @@ import {configureStore} from "@reduxjs/toolkit"
 import userReducer from "./Slices/userSlice";
 // import alertReducer from "./Slices/alertSlice";
 // import boardsReducer from "./Slices/boardsSlice";
-// import boardReducer from "./Slices/boardSlice";
+import boardReducer from "./Slices/boardSlice";
 // import listReducer from "./Slices/listSlice";
 // import cardReducer from "./Slices/cardSlice";
 
@@ -11,9 +11,10 @@ const Store = configureStore({
         user: userReducer,
         // alert: alertReducer,
         // boards: boardsReducer,
-        // board: boardReducer,
+        board: boardReducer,
         // list: listReducer,
-        // card: cardReducer,
+        // card: cardReducer,   
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 }) 
 export default Store;

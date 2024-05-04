@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { Button } from "../../CommonStyled";
+import { Button } from "./CommonStyled";
 
 export const AddAnotherListContainer = styled.div`
   display: flex;

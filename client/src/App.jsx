@@ -4,7 +4,7 @@ import Login from "./components/pages/LoginPage/Login";
 import Register from "./components/pages/RegisterPage/Register";
 import Home from "./components/pages/HomePage/HomePage";
 import { BrowserRouter ,Route, Routes} from 'react-router-dom';
-import Board from "./components/pages/BoardPage/Board";
+import Board from "./components/pages/BoardPage/BoardPage";
 const App = () => {
   return (
     <BrowserRouter>

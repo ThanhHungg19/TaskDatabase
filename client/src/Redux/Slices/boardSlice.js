@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+import mockData from '../../apis/mockData';
 const initialState = {
 	id: '',
 	title: '',
@@ -11,12 +11,16 @@ const initialState = {
 	loading: true,
 	description: '',
 	activityLoading: false,
+	data: mockData,
+	currentBoardID: mockData[0]?._id,
+	currentBoardData: mockData[0],
 };
 
 const boardSlice = createSlice({
 	name: 'board',
 	initialState,
 	reducers: {
+
 		setLoading: (state, action) => {
 			state.loading = action.payload;
 		},
@@ -49,8 +53,31 @@ const boardSlice = createSlice({
 		},
 		addMembers: (state,action)=>{
 			state.members = action.payload;
-		}
-	},
+		},
+
+		selectBoard:(state, action) =>{
+			state.currentBoardID=action.payload;
+			const b = state.data.find(board=>board._id===action.payload)
+			console.log(b);
+			state.currentBoardData = b;
+		},
+
+		updateCurrentBoardData:(state, action)=>{
+			state.currentBoardData = action.payload;
+		},
+
+		updateCurrentColumnsOrder:(state, action)=>{
+			state.currentBoardData.columnOrderIds=action.payload.order;
+			const b = state.data.find(board=>board._id===action.payload.boardId)
+			b.columnOrderIds = action.payload.order
+		},
+		
+		updateCurrentCardsOrder:(state, action)=>{
+			state.currentBoardData.cardOrderIds = action.payload;
+		},
+		
+	
+	},	
 });
 
 export const {
@@ -62,5 +89,10 @@ export const {
 	updateDescription,
 	updateBackground,
 	addMembers,
+	selectBoard,
+	updateCurrentBoardData,
+	updateCurrentColumnsOrder,
+	updateCurrentCardsOrder,
+	updateColumnsData,
 } = boardSlice.actions;
 export default boardSlice.reducer;

@@ -71,8 +71,3 @@ CREATE TABLE Checklists (
   FOREIGN KEY (CardID) REFERENCES Cards(CardID),
   PRIMARY KEY (ChecklistID)
 );
-
-
-
-
-
