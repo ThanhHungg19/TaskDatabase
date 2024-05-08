@@ -98,3 +98,5 @@ values (1, 'Checklist 1', FALSE, 1, 1),
   (3, 'Checklist 3', FALSE, 1, 2),
   (4, 'Checklist 4', FALSE, 1, 3),
   (5, 'Checklist 5', TRUE, 2, 4);
+
+  
