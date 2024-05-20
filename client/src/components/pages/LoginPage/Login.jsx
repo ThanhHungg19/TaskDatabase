@@ -22,7 +22,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   // Handle Router to Register Page
-  const handleLogin = () => {
+  const handleRegister = () => {
     navigate("/register");
   };
 
@@ -39,10 +39,18 @@ const Login = () => {
     document.title = "Log in to Trello Clone";
   }, []);
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(userInformations);
+    const loginResult = await login(userInformations);
+    if (loginResult.success) {
+      // Redirect to a different page upon successful login
+      navigate("/home");
+    } else {
+      // Handle login failure (display error message, etc.)
+      alert("Login failed. Please check your credentials.");
+    }
   };
+
   return (
     <>
       <BgContainer>
@@ -82,7 +90,7 @@ const Login = () => {
               />
               <Button>Log in</Button>
               <Hr />
-              <Link fontSize="0.85rem" onClick={handleLogin}>
+              <Link fontSize="0.85rem" onClick={handleRegister}>
                 Sign up for an account
               </Link>
             </Form>

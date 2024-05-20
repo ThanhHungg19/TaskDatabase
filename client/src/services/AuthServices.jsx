@@ -11,16 +11,18 @@ export const login = async ({ Email, Password }) => {
     if (token) {
       // Store token in local storage
       localStorage.setItem("token", token);
+      return { success: true, token }; // Return token on successful login
     }
   } catch (error) {
     console.error("Login failed:", error);
+    return { success: false, error: error.response.data }; // Return error message on login failure
   }
 };
 
 export const register = async ({
   FirstName,
   LastName,
-  UserName,
+  Username,
   Email,
   Password,
 }) => {
@@ -28,7 +30,7 @@ export const register = async ({
     const res = await axios.post(apiRegister, {
       FirstName,
       LastName,
-      UserName,
+      Username,
       Email,
       Password,
     });
@@ -37,8 +39,10 @@ export const register = async ({
     if (token) {
       // Store token in local storage
       localStorage.setItem("token", token);
+      return { success: true, token }; // Return token on successful registration
     }
   } catch (error) {
     console.log("Register failed:", error);
+    return { success: false, error: error.response.data }; // Return error message on registration failure
   }
 };

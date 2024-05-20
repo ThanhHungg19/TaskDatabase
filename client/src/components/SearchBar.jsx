@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { sm, xs } from "../BreakPoints";
 import SearchIcon from "../Images/search-icon.svg";
@@ -56,12 +55,11 @@ const Icon = styled.img`
   })}
 `;
 
-const SearchBar = (props) => {
-  const {searchString, setSearchString} = props;
+const SearchBar = () => {
   return (
     <Container>
       <Icon src={SearchIcon} />
-      <Input placeholder="Search" value={searchString} onChange={e=>setSearchString(e.target.value)}/>
+      <Input placeholder="Search"/>
     </Container>
   );
 };

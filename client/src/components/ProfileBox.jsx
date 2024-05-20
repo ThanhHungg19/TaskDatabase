@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
@@ -6,12 +6,10 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import Logout from '@mui/icons-material/Logout';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../Redux/Slices/userSlice';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function ProfileBox() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
     const handleClick = (event) => {
@@ -67,11 +65,11 @@ export default function ProfileBox() {
             >
                 <MenuItem>
                     <ListItemIcon>
-                        <Logout fontSize='small' />
+                        <LogoutIcon fontSize='small' />
                     </ListItemIcon>
                     Logout
                 </MenuItem>
             </Menu>
         </React.Fragment>
-    )
+    );
 }

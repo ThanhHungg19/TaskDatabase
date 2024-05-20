@@ -33,7 +33,7 @@ const Register = () => {
   const [userInformations, setUserInformations] = useState({
     FirstName: "",
     LastName: "",
-    UserName: "",
+    Username: "",
     Email: "",
     Password: "",
   });
@@ -44,7 +44,14 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    register(userInformations);
+    const registerResult = await register(userInformations);
+    if (registerResult.success) {
+      // Navigate to the login page upon successful registration
+      navigate("/login");
+    } else {
+      // Handle registration failure (display error message, etc.)
+      alert("Registration failed. Please try again.");
+    }
   };
 
   return (
@@ -76,7 +83,7 @@ const Register = () => {
                 type="text"
                 placeholder="Enter Last Name"
                 required
-                value={userInformations.lastName}
+                value={userInformations.LastName}
                 onChange={(e) =>
                   setUserInformations({
                     ...userInformations,
@@ -85,17 +92,17 @@ const Register = () => {
                 }
               />
               <Input
-                type="text"
-                placeholder="Enter Username"
-                required
-                value={userInformations.UserName}
-                onChange={(e) =>
-                  setUserInformations({
-                    ...userInformations,
-                    UserName: e.target.value,
-                  })
-                }
-              />
+                  type="text"
+                  placeholder="Enter Username"
+                  required
+                  value={userInformations.Username} // Make sure UserName is correctly spelled
+                  onChange={(e) =>
+                    setUserInformations({
+                      ...userInformations,
+                      Username: e.target.value, // Ensure that UserName is set correctly
+                    })
+                  }
+                />
               <Input
                 type="email"
                 placeholder="Enter Email"
