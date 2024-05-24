@@ -13,7 +13,9 @@ const IndexPage = () => {
           <Link to="/login">
             <button className="btn login">Login</button>
           </Link>
-          <button className="btn signup">Sign up</button>
+          <Link to="/signup">
+            <button className="btn signup">Sign up</button>
+          </Link>
         </div>
       </header>
       <main className="main-content">

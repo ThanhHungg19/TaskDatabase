@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
 import axios from "axios";
 import Snackbar from "@mui/material/Snackbar";
@@ -30,6 +30,8 @@ const SignUpPage = () => {
     "success"
   );
 
+  const navigate = useNavigate();
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserInformations((prev) => ({
@@ -50,10 +52,17 @@ const SignUpPage = () => {
 
     try {
       const response = await axios.post("http://localhost:3001/auth/register", userInformations);
+      const token = response.data.token; // assuming the token is returned in the response
+
+      // Store the token in local storage
+      localStorage.setItem('userToken', token);
+
       console.log("Sign up successful:", response.data);
       setSnackbarMessage("Sign up successful!");
       setSnackbarSeverity("success");
       setOpen(true);
+      
+      navigate('/board'); // Navigate to board page upon successful signup
     } catch (error) {
       console.error("Error signing up:", error);
       setSnackbarMessage("Error signing up. Please try again.");
