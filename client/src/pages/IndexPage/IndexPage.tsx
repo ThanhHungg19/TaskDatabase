@@ -10,7 +10,7 @@ const IndexPage = () => {
       <header className="header">
         <img src={trelloLogo} alt="Trello Logo" className="logo" />
         <div className="header-buttons">
-          <Link to="/board">
+          <Link to="/login">
             <button className="btn login">Login</button>
           </Link>
           <button className="btn signup">Sign up</button>
