@@ -23,3 +23,8 @@ export interface IBoard {
     title: string;
     cards: ICard[];
 }
+
+export interface IComment {
+    id: number;
+    text: string;
+  }
