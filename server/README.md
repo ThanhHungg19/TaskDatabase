@@ -16,7 +16,7 @@ These instructions will get you a copy of the project up and running on your loc
 1. Clone the repository
 
 ```sh
-git clone https://github.com/quang-pham-1109/task-manager-server
+git clone https://github.com/ThanhHungg19/TaskDatabase
 ```
 
 2. Create a database and `.env` file
