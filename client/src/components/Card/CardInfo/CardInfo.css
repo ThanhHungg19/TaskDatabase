@@ -124,3 +124,24 @@
     font-size: 1rem;
     padding: 10px;
   }
+
+  .cardinfo-box-comments {
+    margin-top: 10px;
+  }
+  
+  .cardinfo-box-comment {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .cardinfo-box-comment p {
+    margin: 0;
+    flex-grow: 1;
+  }
+  
+  .cardinfo-box-comment svg {
+    cursor: pointer;
+  }

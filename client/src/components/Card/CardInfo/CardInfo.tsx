@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Calendar, CheckSquare, List, Tag, Trash, Type } from "react-feather";
+import { Calendar, CheckSquare, List, Tag, Trash, Type, MessageCircle } from "react-feather";
 import { colorsList } from "../../../helper/util";
 import Modal from "../../Modals/Modal";
 import CustomInput from "../../CustomInput/CustomInput";
-
 import "./CardInfo.css";
-import { ICard, ILabel, ITask } from "../../../interfaces/kanban";
+import { ICard, ILabel, ITask, IComment } from "../../../interfaces/kanban";
 import Chip from "../../Common/Chip";
 
 interface CardInfoProps {
@@ -15,96 +14,51 @@ interface CardInfoProps {
   updateCard: (boardId: number, cardId: number, card: ICard) => void;
 }
 
-function CardInfo(props: CardInfoProps) {
-  const { onClose, card, boardId, updateCard } = props;
+const CardInfo: React.FC<CardInfoProps> = ({ onClose, card, boardId, updateCard }) => {
   const [selectedColor, setSelectedColor] = useState("");
-  const [cardValues, setCardValues] = useState<ICard>({
-    ...card,
-  });
+  const [cardValues, setCardValues] = useState<ICard>({ ...card });
 
-  const updateTitle = (value: string) => {
-    setCardValues({ ...cardValues, title: value });
-  };
-
-  const updateDesc = (value: string) => {
-    setCardValues({ ...cardValues, desc: value });
-  };
+  const updateTitle = (value: string) => setCardValues({ ...cardValues, title: value });
+  const updateDesc = (value: string) => setCardValues({ ...cardValues, desc: value });
+  const updateDate = (date: string) => setCardValues({ ...cardValues, date });
 
   const addLabel = (label: ILabel) => {
-    const index = cardValues.labels.findIndex(
-      (item) => item.text === label.text
-    );
-    if (index > -1) return; //if label text already exist then return
-
-    setSelectedColor("");
-    setCardValues({
-      ...cardValues,
-      labels: [...cardValues.labels, label],
-    });
+    if (!cardValues.labels.some((item) => item.text === label.text)) {
+      setSelectedColor("");
+      setCardValues({ ...cardValues, labels: [...cardValues.labels, label] });
+    }
   };
 
   const removeLabel = (label: ILabel) => {
-    const tempLabels = cardValues.labels.filter(
-      (item) => item.text !== label.text
-    );
-
-    setCardValues({
-      ...cardValues,
-      labels: tempLabels,
-    });
+    setCardValues({ ...cardValues, labels: cardValues.labels.filter((item) => item.text !== label.text) });
   };
 
   const addTask = (value: string) => {
-    const task: ITask = {
-      id: Date.now() + Math.random() * 2,
-      completed: false,
-      text: value,
-    };
-    setCardValues({
-      ...cardValues,
-      tasks: [...cardValues.tasks, task],
-    });
+    const task: ITask = { id: Date.now() + Math.random() * 2, completed: false, text: value };
+    setCardValues({ ...cardValues, tasks: [...cardValues.tasks, task] });
   };
 
   const removeTask = (id: number) => {
-    const tasks = [...cardValues.tasks];
-
-    const tempTasks = tasks.filter((item) => item.id !== id);
-    setCardValues({
-      ...cardValues,
-      tasks: tempTasks,
-    });
+    setCardValues({ ...cardValues, tasks: cardValues.tasks.filter((item) => item.id !== id) });
   };
 
   const updateTask = (id: number, value: boolean) => {
-    const tasks = [...cardValues.tasks];
-
-    const index = tasks.findIndex((item) => item.id === id);
-    if (index < 0) return;
-
-    tasks[index].completed = Boolean(value);
-
-    setCardValues({
-      ...cardValues,
-      tasks,
-    });
+    const tasks = cardValues.tasks.map((item) => (item.id === id ? { ...item, completed: value } : item));
+    setCardValues({ ...cardValues, tasks });
   };
 
-  const calculatePercent = () => {
-    if (!cardValues.tasks?.length) return 0;
-    const completed = cardValues.tasks?.filter(
-      (item) => item.completed
-    )?.length;
-    return (completed / cardValues.tasks?.length) * 100;
+  const addComment = (text: string) => {
+    const comment: IComment = { id: Date.now() + Math.random() * 2, text };
+    setCardValues({ ...cardValues, comments: [...cardValues.comments, comment] });
   };
 
-  const updateDate = (date: string) => {
-    if (!date) return;
+  const updateComment = (id: number, text: string) => {
+    const comments = cardValues.comments.map((item) => (item.id === id ? { ...item, text } : item));
+    setCardValues({ ...cardValues, comments });
+  };
 
-    setCardValues({
-      ...cardValues,
-      date,
-    });
+  const removeComment = (id: number) => {
+    setCardValues({ ...cardValues, comments: cardValues.comments.filter((item) => item.id !== id) });
   };
 
   useEffect(() => {
@@ -112,7 +66,9 @@ function CardInfo(props: CardInfoProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardValues]);
 
-  const calculatedPercent = calculatePercent();
+  const calculatedPercent = cardValues.tasks.length
+    ? (cardValues.tasks.filter((item) => item.completed).length / cardValues.tasks.length) * 100
+    : 0;
 
   return (
     <Modal onClose={onClose}>
@@ -218,6 +174,32 @@ function CardInfo(props: CardInfoProps) {
             text={"Add a Checklist"}
             placeholder="Enter CheckList"
             onSubmit={addTask}
+          />
+        </div>
+
+        <div className="cardinfo-box">
+          <div className="cardinfo-box-title">
+            <MessageCircle />
+            <p>Comments</p>
+          </div>
+          <div className="cardinfo-box-comments">
+            {cardValues.comments?.map((comment) => (
+              <div key={comment.id} className="cardinfo-box-comment">
+                <CustomInput
+                  defaultValue={comment.text}
+                  text={comment.text}
+                  placeholder="Enter comment"
+                  onSubmit={(value: string) => updateComment(comment.id, value)}
+                />
+                <Trash onClick={() => removeComment(comment.id)} />
+              </div>
+            ))}
+          </div>
+          <CustomInput
+            defaultValue={cardValues.desc}
+            text={cardValues.desc || "Add a Comment"}
+            placeholder="Enter a comment"
+            onSubmit={updateDesc}
           />
         </div>
       </div>
