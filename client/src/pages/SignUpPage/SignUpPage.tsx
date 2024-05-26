@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
 import axios from "axios";
@@ -32,6 +32,10 @@ const SignUpPage = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    document.title = "Create a Trello Account";
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserInformations((prev) => ({
@@ -51,21 +55,26 @@ const SignUpPage = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3001/auth/register", userInformations);
-      const token = response.data.token; // assuming the token is returned in the response
+      const response = await axios.post(
+        "http://localhost:3001/auth/register",
+        userInformations
+      );
+      const token = response.data.token;
 
       // Store the token in local storage
-      localStorage.setItem('userToken', token);
+      localStorage.setItem("token", token);
 
       console.log("Sign up successful:", response.data);
       setSnackbarMessage("Sign up successful!");
       setSnackbarSeverity("success");
       setOpen(true);
-      
-      navigate('/board'); // Navigate to board page upon successful signup
+
+      // Redirect to the board page upon successful signup
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } catch (error) {
-      console.error("Error signing up:", error);
-      setSnackbarMessage("Error signing up. Please try again.");
+      console.log("Register failed:", error);
       setSnackbarSeverity("error");
       setOpen(true);
     }
@@ -113,7 +122,7 @@ const SignUpPage = () => {
             placeholder="Enter Username"
             name="Username"
             value={userInformations.Username}
-            onChange={handleInputChange}
+            
             required
           />
           <input

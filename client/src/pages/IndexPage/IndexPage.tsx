@@ -21,7 +21,7 @@ const IndexPage = () => {
       <main className="main-content">
         <div className="text-content">
           <h1>Trello helps teams move work forward.</h1>
-          <p>Collaborate, never teamworks. How to pass PDM A+? Use Trello</p>
+          <p>Collaborate, never teamworks. How to pass PDM A+? Use Trollo</p>
           <button className="btn signup-main">Sign up - it’s free</button>
         </div>
         <div className="image-content">
