@@ -3,7 +3,7 @@ import './LoginPage.css';
 import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Import useNavigate
 import trelloLogo from '../../assets/trello-logo .svg';
 import leftImage from '../../assets/trello-left.svg';
 import rightImage from '../../assets/trello-right.svg';
@@ -21,6 +21,7 @@ const LoginPage = () => {
   const [open, setOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +35,12 @@ const LoginPage = () => {
       setSnackbarMessage('Login successful!');
       setSnackbarSeverity('success');
       setOpen(true);
-      // Handle successful login (e.g., save token, redirect, etc.)
+      // Save the token to local storage
+      localStorage.setItem('authToken', response.data.token);
+      // Redirect to the board page after a short delay
+      setTimeout(() => {
+        navigate('/board/:title');
+      }, 2000); // Adjust the delay as needed
     } catch (error) {
       console.error('Error logging in:', error);
       setSnackbarMessage('Invalid email or password');

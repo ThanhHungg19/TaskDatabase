@@ -215,8 +215,8 @@ function CardInfo(props: CardInfoProps) {
             ))}
           </div>
           <CustomInput
-            text={"Add a Task"}
-            placeholder="Enter task"
+            text={"Add a Checklist"}
+            placeholder="Enter CheckList"
             onSubmit={addTask}
           />
         </div>

@@ -159,9 +159,9 @@ function BoardPage() {
             <CustomInput
               displayClass="app-boards-add-board"
               editClass="app-boards-add-board-edit"
-              placeholder="Enter Board Name"
-              text="Add Board"
-              buttonText="Add Board"
+              placeholder="Enter  Name"
+              text="Add List"
+              buttonText="Add"
               onSubmit={addboardHandler}
             />
           </div>
