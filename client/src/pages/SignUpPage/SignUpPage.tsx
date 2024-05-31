@@ -122,7 +122,7 @@ const SignUpPage = () => {
             placeholder="Enter Username"
             name="Username"
             value={userInformations.Username}
-            
+            onChange={handleInputChange}
             required
           />
           <input
